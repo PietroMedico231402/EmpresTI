@@ -14,7 +14,10 @@ Negócio em `docs/prd.md`. Stack decidida em `docs/adr/001-stack.md`.
 
 ## Comandos
 
-Ainda não há comandos da aplicação validados nesta máquina.
+- `npm run lint` — valida o código com ESLint.
+- `npm test` — executa os testes uma vez com Vitest.
+- `npm run build` — gera o build de produção do Next.js.
+
 Só registre nesta seção comandos que já tenham sido executados com sucesso neste ambiente.
 
 ## Ambiente
@@ -35,10 +38,11 @@ Só registre nesta seção comandos que já tenham sido executados com sucesso n
 
 ## Estado atual do projeto
 
-- Existem apenas documentação, este arquivo de instruções e a configuração local de ambiente.
-- Ainda não existem código de aplicação, manifesto de dependências, estrutura de pastas da aplicação, testes ou migrations.
-- Ainda não existem `docs/specs/`, `rules/` nem `.env.example`.
+- Existe um scaffold Next.js com App Router, TypeScript strict, Tailwind CSS e componentes-base do shadcn/ui.
+- Existe configuração de Vitest e Testing Library com um teste do componente Button.
+- A interface das telas ainda não foi implementada; a execução parou ao concluir a T01 de `docs/specs/001-interface-inicial/tasks.md`.
+- Ainda não existem integrações, acesso a banco, migrations nem `.env.example`.
+- Existem `docs/specs/` e `rules/`.
 - Este checkout ainda não possui remoto Git configurado nem vínculo local em `.vercel/project.json`.
-- Nenhum comando de desenvolvimento, teste ou build foi validado nesta máquina.
 
 ## Procedimentos
