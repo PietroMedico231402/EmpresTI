@@ -10,7 +10,7 @@ alwaysApply: true
 
 ## Autoridade
 
-- Não escreva ADR. Se encontrar uma decisão que precisa de um, descreva
+- Se encontrar uma decisão que precisa de um, descreva
   a decisão e as alternativas, e PARE. Quem decide é o time.
 - Não contrarie o que está em `docs/adr/`. Se precisar contrariar, pare.
 - Não responda por conta própria o que o PRD deixou ambíguo. Liste as
@@ -37,7 +37,7 @@ alwaysApply: true
 
 - Não faça push na branch de produção. Trabalhe em branch e abra PR.
 - Não rode deploy nem altere configuração da Vercel.
-- Não toque no projeto Supabase remoto: nada de SQL, alteração de schema
+- No projeto Supabase remoto apenas crie tudo no schema dev, porem deixe facil para subir tanto para hml, tanto para prod, nunca suba nada para prod, nunca suba nada para prod. Hml só suba caso seja pedido
   ou alteração de dados por lá. Tudo acontece no banco local.
 
 ## Precedência
