@@ -46,3 +46,14 @@ Só registre nesta seção comandos que já tenham sido executados com sucesso n
 - Este checkout ainda não possui remoto Git configurado nem vínculo local em `.vercel/project.json`.
 
 ## Procedimentos
+
+
+
+
+## Subagentes
+- Ficam em agents/<nome>.md. O frontmatter diz quando delegar; o
+  corpo é a instrução completa do subagente.
+- Subagente não herda esta conversa: ao delegar, passe tudo que o
+  arquivo dele pede como entrada.
+- Se o harness não tiver subagentes, abra uma sessão nova e comece
+  com: "Aja conforme agents/<nome>.md." e as entradas pedidas.

@@ -16,3 +16,11 @@ Ao iniciar qualquer funcionalidade nova do PRD.
 
 - Não escreva código antes do plano aprovado.
 - Não crie pasta de spec fora do padrão `NNN-nome-curto`.
+
+
+## Antes de declarar uma spec pronta
+- Delegue ao subagente verificador-spec (agents/verificador-spec.md),
+  passando o caminho da spec e o intervalo de commits.
+- A spec só é pronta com "Veredito: PRONTA". Qualquer outro resultado
+  volta para as tarefas — quem corrige é o agente principal, nunca o
+  verificador.

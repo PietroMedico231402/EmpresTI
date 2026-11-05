@@ -18,14 +18,15 @@ alwaysApply: true
 ## Autorização por tipo de ação
 > leitor: agente
 
-| ação                                        | nível          |
-|---------------------------------------------|----------------|
-| Editar arquivo existente dentro do escopo d | livre          |
-| Criar arquivo novo                          | avisar depois  |
-| Deletar ou renomear arquivo                 | pedir antes    |
-| Instalar ou atualizar dependência           | pedir antes    |
-| Criar ou alterar migration                  | pedir antes    |
-| Mexer em variável de ambiente, config de de | proibido       |
+| ação                                           | nível                   |
+|------------------------------------------------|-------------------------|
+| Editar arquivo existente no escopo da tarefa   | livre                   |
+| Criar arquivo novo                             | avisar depois           |
+| Deletar ou renomear arquivo                    | pedir antes             |
+| Instalar ou atualizar dependência              | pedir antes             |
+| Criar ou alterar migration                     | pedir antes             |
+| Mexer em variável de ambiente ou segredo       | proibido                |
+| Configurar Vercel ou disparar redeploy         | solicitação específica  |
 
 O que cada nível significa:
 - livre — faça e siga em frente.
@@ -33,6 +34,8 @@ O que cada nível significa:
 - pedir antes — descreva o que pretende fazer e PARE.
 - proibido — não faça, mesmo que eu peça no meio de uma tarefa.
   Se eu pedir, me lembre desta linha.
+- solicitação específica — faça somente quando o usuário pedir a ação para um
+  projeto e ambiente identificados, seguindo `rules/restrictions.md`.
 
 ## Configuração do operador
 > leitor: humano — isto não é instrução para o agente

@@ -36,7 +36,13 @@ alwaysApply: true
 ## Produção
 
 - Não faça push na branch de produção. Trabalhe em branch e abra PR.
-- Não rode deploy nem altere configuração da Vercel.
+- Durante a execução de tarefas das specs, não rode deploy nem altere a
+  configuração da Vercel, salvo se a própria tarefa aprovada incluir isso.
+- Em uma tarefa operacional separada, o agente pode ajustar a configuração da
+  Vercel ou disparar um redeploy quando o usuário solicitar explicitamente a
+  ação e indicar o projeto e o ambiente. Antes de publicar em produção, mostre
+  a alteração concreta e as verificações realizadas e peça aprovação final.
+  Essa autorização não inclui push, alterações de segredos nem Supabase remoto.
 - No projeto Supabase remoto apenas crie tudo no schema dev, porem deixe facil para subir tanto para hml, tanto para prod, nunca suba nada para prod, nunca suba nada para prod. Hml só suba caso seja pedido
   ou alteração de dados por lá. Tudo acontece no banco local.
 
