@@ -16,7 +16,7 @@ describe("login demonstrativo", () => {
 
     expect(screen.getByRole("heading", { name: "Entrar", level: 1 })).toBeInTheDocument();
     expect(screen.getByText("itens por pessoa")).toBeInTheDocument();
-    expect(screen.getByText("dias de prazo")).toBeInTheDocument();
+    expect(screen.getByText("dias úteis de prazo")).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "E-mail" })).toHaveAttribute("type", "email");
     expect(screen.getByLabelText("Senha")).toHaveAttribute("type", "password");
   });

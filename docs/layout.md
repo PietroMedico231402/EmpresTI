@@ -304,7 +304,7 @@ Tamanhos: 12px (breadcrumb) Â· 13px (caret) Â· 15â€“16px (nav/marca) Â
 
 ### 01 Â· Login (1440Ã—820)
 Split `560px | 1fr`.
-- **Esquerda** â€” hero em `linear-gradient(160deg,#001449,#00102F 60%,#080C1A)`, padding 56px, `justify-content:space-between`: marca no topo (Ã­cone 34px, texto 16px) Â· bloco central com tÃ­tulo 34px (mÃ¡x. 20ch), subtÃ­tulo 14px `#93A0C6` (mÃ¡x. 38ch), rÃ©gua-marca esmaecida, dois nÃºmeros (3 itens por pessoa / 14 dias de prazo) com `gap:40px` Â· rodapÃ© "OperaÃ§Ãµes Â· v1" 11px.
+- **Esquerda** â€” hero em `linear-gradient(160deg,#001449,#00102F 60%,#080C1A)`, padding 56px, `justify-content:space-between`: marca no topo (Ã­cone 34px, texto 16px) Â· bloco central com tÃ­tulo 34px (mÃ¡x. 20ch), subtÃ­tulo 14px `#93A0C6` (mÃ¡x. 38ch), rÃ©gua-marca esmaecida, dois nÃºmeros (5 itens por pessoa / 14 dias úteis de prazo) com `gap:40px` Â· rodapÃ© "OperaÃ§Ãµes Â· v1" 11px.
 - **Direita** â€” formulÃ¡rio centralizado de 372px, padding 56px: "Entrar" 22px/600, subtÃ­tulo 13px, campos e-mail + senha (`gap:18px`), botÃ£o primÃ¡rio 44px com `ph-arrow-right`, rÃ©gua esmaecida, nota de suporte 12px centralizada.
 
 ### 02 Â· CatÃ¡logo (1440Ã—900)
