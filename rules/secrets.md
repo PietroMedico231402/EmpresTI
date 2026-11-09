@@ -1,6 +1,6 @@
 ---
 description: Onde cada variável de ambiente vive e qual chave usar
-globs: ["**/.env*", "<CAMINHO-DO-CLIENT>", "<CAMINHO-DE-CONFIG>"]
+globs: ["**/.env*", "app/**", "components/**", "next.config.*", "prisma/**"]
 alwaysApply: false
 ---
 
@@ -20,17 +20,18 @@ do banco, ou ao escrever código que lê configuração.
 2. Chave de serviço: ignora todas as políticas. Só em código que roda
    no servidor, nunca em componente de cliente, nunca em variável com
    prefixo público.
-3. Variável nova existe em TRÊS lugares ou em nenhum:
-   `.env.local` (sua máquina) · `.env.example` (versionado, sem valor)
-   · painel da Vercel (preview e production).
-4. Ao criar uma variável, diga na resposta em quais dos três lugares
-   você já a colocou e o que falta eu fazer à mão.
+3. Para cada variável nova, descreva os três destinos necessários ao operador:
+   `.env.local` (máquina local), `.env.example` (versionado, sem valor) e
+   painel da Vercel (preview e production). A regra operacional proíbe o
+   agente de alterar variáveis ou segredos nesses lugares.
+4. Informe na resposta o que falta ao operador configurar; não afirme que
+   a variável está pronta enquanto algum dos três destinos faltar.
 
 ## Verificação
 
 Uma busca por "service" no código que vai para o navegador não
-retorna nada. `.env.example` tem todas as chaves que o projeto usa,
-sem nenhum valor real.
+retorna nada. O operador confirma `.env.example` com todas as chaves
+usadas pelo projeto, sem valor real, antes de publicar.
 
 ## Não faça
 

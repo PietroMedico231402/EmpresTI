@@ -20,8 +20,11 @@ registrada se alguém lembrar de atualizar a linha.
 5. Tela de Operações com todos os empréstimos em aberto.
 
 ## Regras que Operações já decidiu
-- Cada pessoa pode estar com no máximo 3 itens ao mesmo tempo.
-- O prazo padrão de devolução é de 14 dias.
+- Cada pessoa pode estar com no máximo 5 empréstimos em aberto.
+- O prazo padrão de devolução é de 14 dias úteis após a solicitação. A contagem
+  começa no próximo dia útil, sem incluir o dia do pedido, e exclui sábados,
+  domingos e feriados nacionais do Brasil. O vencimento ocorre ao fim do minuto
+  23h59 do 14º dia útil, no horário de São Paulo.
 - Quem tem item em atraso não pode pegar outro emprestado.
 - Equipamento em manutenção não aparece como disponível.
 

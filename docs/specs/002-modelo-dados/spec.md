@@ -28,7 +28,7 @@ reserva futura, histórico de manutenção ou importação da planilha.
   horário.
 - Não haverá histórico de manutenção na primeira versão.
 - O banco impede dois empréstimos abertos para o mesmo equipamento.
-- O limite de três itens e o bloqueio por atraso são validados na camada
+- O limite de cinco empréstimos abertos e o bloqueio por atraso são validados na camada
   Service dentro de transação.
 - Equipamentos com histórico não são apagados; passam para `RETIRED`.
 - Prisma Migrate é o único dono do schema. RLS, policies e triggers ficam no
@@ -103,7 +103,10 @@ linhas não podem ser atualizadas nem removidas.
 - `asset_tag` é único por tenant.
 - Categoria é única por tenant sem distinguir maiúsculas de minúsculas.
 - Um índice único parcial impede mais de um empréstimo aberto por equipamento.
-- Prazo é definido como retirada mais 14 dias ao criar o empréstimo.
+- `due_at` armazena o vencimento e permite derivar atraso sem coluna
+  redundante. O cálculo vigente para novas solicitações é definido na spec
+  `004-solicitar-emprestimo`; a migration inicial ainda aplica 14 dias
+  corridos e precisa ser superada antes de habilitar solicitações reais.
 - Campos de devolução são ambos nulos ou ambos preenchidos.
 - Identidade, equipamento, pessoa, retirada e prazo de um empréstimo tornam-se
   imutáveis após a criação.
@@ -129,13 +132,13 @@ Antes de criar um empréstimo, a Service executa em transação:
 
 1. confirma que o equipamento pertence ao tenant e está `AVAILABLE`;
 2. confirma que não existe empréstimo aberto para o equipamento;
-3. confirma que a pessoa possui menos de três empréstimos abertos;
+3. confirma que a pessoa possui menos de cinco empréstimos abertos;
 4. confirma que a pessoa não possui empréstimo aberto vencido;
 5. cria o empréstimo e o evento de auditoria.
 
 O índice único parcial protege a concorrência por equipamento. A Service deve
 usar bloqueio transacional adequado para serializar solicitações simultâneas da
-mesma pessoa e garantir o limite de três itens.
+mesma pessoa e garantir o limite de cinco itens.
 
 ## Critérios de aceitação
 
@@ -145,8 +148,8 @@ mesma pessoa e garantir o limite de três itens.
   de tenants diferentes.
 - **CA-03:** não é possível manter dois empréstimos abertos para o mesmo
   equipamento.
-- **CA-04:** prazo de um novo empréstimo é calculado em 14 dias e atraso é
-  derivável sem coluna redundante.
+- **CA-04:** empréstimos armazenam `due_at` e o atraso é derivável de
+  `returned_at IS NULL AND due_at < now()`, sem coluna redundante.
 - **CA-05:** devolução guarda horário e membership responsável, preservando o
   histórico do empréstimo.
 - **CA-06:** todas as tabelas têm RLS e policies que respeitam titular,

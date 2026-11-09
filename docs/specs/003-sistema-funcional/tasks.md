@@ -46,14 +46,14 @@ por autorização, roda os checks e para.
 - Consultar e filtrar equipamentos por tenant e disponibilidade derivada.
 - Conectar catálogo e detalhe ao banco; cobrir estados vazios e indisponíveis.
 
-## T06 — Solicitação e meus empréstimos
+## T06 — Devolução e histórico
 
-**Critérios:** CA-04, CA-05, CA-08  
-**Dependência:** T05.
+**Critérios:** CA-05, CA-08
+**Dependência:** T05 e conclusão de `004-solicitar-emprestimo`.
 
-- Implementar transação, bloqueio, prazo, auditoria e devolução do titular.
-- Conectar confirmação, lista atual e histórico reais.
-- Testar limite, atraso, concorrência e autorização.
+- Implementar devolução do titular com auditoria e histórico íntegro.
+- Conectar a ação de devolução e o histórico real.
+- Testar autorização da devolução e integridade do histórico.
 
 ## T07 — Operações e cadastro
 
@@ -68,7 +68,7 @@ por autorização, roda os checks e para.
 ## T08 — Verificação integrada
 
 **Critérios:** CA-01 a CA-09  
-**Dependência:** T01 a T07 e configuração local feita pelo operador.
+**Dependência:** T01 a T07, `004-solicitar-emprestimo` e configuração local feita pelo operador.
 
 - Exercitar convite → aceite → login → catálogo → empréstimo → devolução.
 - Conferir cadastro por Operações, isolamento, ausência de mocks e segredos.
