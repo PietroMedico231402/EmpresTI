@@ -13,9 +13,9 @@ export function AppHeader() {
 
   return (
     <header className="flex h-16 shrink-0 items-center justify-between gap-5 border-b border-[#1a2340] px-7">
-      {isDetail || isNewEquipment ? (
+      {isDetail || isNewEquipment || isMyLoans ? (
         <nav aria-label="Caminho da página" className="flex min-w-0 items-center gap-[9px] text-xs">
-          <Link href={isDetail ? "/catalogo" : "/operacoes/emprestimos"}>{isDetail ? "Catálogo" : "Operações"}</Link>
+          <Link href={isNewEquipment ? "/operacoes/emprestimos" : "/catalogo"}>{isNewEquipment ? "Operações" : "Catálogo"}</Link>
           <i className="ph ph-caret-right text-xs text-[#5e6884]" aria-hidden="true" />
           {isDetail ? (
             <>
@@ -23,8 +23,10 @@ export function AppHeader() {
               <i className="ph ph-caret-right text-xs text-[#5e6884]" aria-hidden="true" />
               <span aria-current="page" className="truncate text-foreground">PAT-1042</span>
             </>
-          ) : (
+          ) : isNewEquipment ? (
             <span aria-current="page" className="truncate text-foreground">Cadastrar equipamento</span>
+          ) : (
+            <span aria-current="page" className="truncate text-foreground">Meus empréstimos</span>
           )}
         </nav>
       ) : (
@@ -40,7 +42,7 @@ export function AppHeader() {
       )}
 
       <div className="flex shrink-0 items-center gap-4">
-        {showCount && <span className="text-xs text-[#9aa3bc]">2 de 3 itens com você</span>}
+        {showCount && <span className="text-xs text-[#9aa3bc]">2 de 5 itens com você</span>}
         {isOperationsList && (
           <Link href="/operacoes/equipamentos/novo" className="flex h-[34px] items-center gap-2 rounded-lg border border-[#5b7fe0] px-[14px] text-xs font-semibold text-[#b4c6f6] hover:border-[#8aa6ee]">
             <i className="ph ph-plus" aria-hidden="true" /> Cadastrar equipamento

@@ -12,4 +12,5 @@ Ao escrever, alterar ou remover qualquer teste.
 
 ## Verificação
 
-`<COMANDO-TESTES>` passa com o banco local recém-resetado.
+`npm test` passa. Testes que exercitam policies ou constraints devem usar
+PostgreSQL real local, após a reconstrução do schema por Prisma Migrate.

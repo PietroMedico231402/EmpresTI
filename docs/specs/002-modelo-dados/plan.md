@@ -66,7 +66,7 @@
 
 ## Riscos e controles
 
-- **Concorrência no limite de três itens:** a Service usará transação e bloqueio
+- **Concorrência no limite de cinco itens:** a Service usará transação e bloqueio
   por membership; o índice parcial continuará protegendo o equipamento.
 - **Relações cruzadas entre tenants:** chaves estrangeiras compostas incluem
   `tenant_id`.

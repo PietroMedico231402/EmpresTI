@@ -66,10 +66,10 @@ export function AppSidebar() {
       </nav>
 
       <div className="mt-auto flex items-center gap-[10px] rounded-[10px] border border-sidebar-border bg-[#0b1128] p-3">
-        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#132663] text-[11px] font-semibold text-[#b4c6f6]" aria-hidden="true">{isOperations ? "OP" : "CO"}</span>
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#132663] text-[11px] font-semibold text-[#b4c6f6]" aria-hidden="true">{isOperations ? "OP" : "MA"}</span>
         <div className="min-w-0">
-          <p className="truncate text-xs font-semibold text-foreground">{isOperations ? "Operações" : "Colaborador"}</p>
-          <p className="truncate text-[11px] text-[#7c86a2]">{isOperations ? "Balcão · 2º andar" : "Conta demonstrativa"}</p>
+          <p className="truncate text-xs font-semibold text-foreground">{isOperations ? "Operações" : "Marina Alves"}</p>
+          <p className="truncate text-[11px] text-[#7c86a2]">{isOperations ? "Balcão · 2º andar" : "Design · 2 itens"}</p>
         </div>
       </div>
     </aside>

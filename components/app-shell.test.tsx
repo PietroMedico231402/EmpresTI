@@ -30,6 +30,34 @@ describe("shell autenticado", () => {
     expect(screen.getByRole("link", { name: "Catálogo" })).toHaveAttribute("aria-current", "page");
   });
 
+  it("test_ca_02_mostra_usuario_demonstrativo_e_busca_no_catalogo", () => {
+    render(<AppSidebar />);
+    render(<AppHeader />);
+
+    expect(screen.getByText("Marina Alves")).toBeInTheDocument();
+    expect(screen.getByText("Design · 2 itens")).toBeInTheDocument();
+    expect(screen.getByRole("searchbox", { name: "Buscar equipamentos" })).toBeInTheDocument();
+    expect(screen.getByText("2 de 5 itens com você")).toBeInTheDocument();
+  });
+
+  it("test_ca_03_marca_operacoes_ativa_e_mostra_usuario_do_balcao", () => {
+    mockPathname.mockReturnValue("/operacoes/emprestimos");
+    render(<AppSidebar />);
+
+    expect(screen.getByRole("link", { name: "Empréstimos em aberto" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByText("Balcão · 2º andar")).toBeInTheDocument();
+  });
+
+  it("test_ca_09_expoe_breadcrumb_na_lista_de_emprestimos", () => {
+    mockPathname.mockReturnValue("/meus-emprestimos");
+    render(<AppHeader />);
+
+    const breadcrumb = screen.getByRole("navigation", { name: "Caminho da página" });
+    expect(within(breadcrumb).getByRole("link", { name: "Catálogo" })).toHaveAttribute("href", "/catalogo");
+    expect(within(breadcrumb).getByText("Meus empréstimos")).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Pegar emprestado" })).toHaveAttribute("href", "/catalogo");
+  });
+
   it("test_ca_09_expoe_caminho_e_controle_com_nome_acessivel", () => {
     mockPathname.mockReturnValue("/catalogo/PAT-1042");
     render(<AppHeader />);

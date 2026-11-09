@@ -68,13 +68,13 @@ integração com autenticação, API ou banco de dados.
 ### Detalhe do equipamento
 
 - Exibir imagem simbólica, estado, descrição, ficha técnica e histórico.
-- Exibir cálculo demonstrativo do prazo padrão de 14 dias.
+- Exibir cálculo demonstrativo do prazo padrão de 14 dias úteis.
 - A ação de solicitar deve abrir um diálogo de confirmação.
 - A confirmação local deve navegar para Meus empréstimos.
 
 ### Meus empréstimos
 
-- Exibir dois itens atuais, limite de três e barras de prazo.
+- Exibir dois itens atuais, limite de cinco e barras de prazo.
 - Exibir ação de devolução apenas como interação demonstrativa local.
 - Exibir histórico com situações no prazo e com atraso.
 
@@ -122,7 +122,7 @@ integração com autenticação, API ou banco de dados.
 - **CA-04:** o catálogo apresenta busca, aviso de regras, filtros e os estados
   disponível, emprestado e manutenção, sem oferecer ação indevida.
 - **CA-05:** o detalhe apresenta ficha, histórico, limite da pessoa e diálogo
-  acessível de confirmação com prazo de 14 dias.
+  acessível de confirmação com prazo de 14 dias úteis.
 - **CA-06:** Meus empréstimos apresenta limite, dois empréstimos correntes,
   progresso de prazo e histórico com situações distintas.
 - **CA-07:** Operações apresenta quatro indicadores, sete empréstimos, destaque
