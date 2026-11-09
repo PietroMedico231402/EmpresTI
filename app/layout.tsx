@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const openSans = Open_Sans({
+const openSans = localFont({
+  src: "./fonts/OpenSans.ttf",
+  weight: "300 800",
   variable: "--font-open-sans",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

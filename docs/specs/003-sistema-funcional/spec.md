@@ -49,7 +49,9 @@ esta spec substitui o comportamento fictício delas após a integração.
 ### Empréstimos e devoluções
 
 - Solicitar um item disponível cria imediatamente o empréstimo com vencimento
-  em 14 dias. O servidor bloqueia pessoa com três itens ou item em atraso.
+  no 14º dia útil, ao fim do minuto 23h59 em São Paulo. O servidor bloqueia
+  pessoa com cinco empréstimos abertos ou item em atraso. O fluxo detalhado de
+  solicitação segue `docs/specs/004-solicitar-emprestimo/spec.md`.
 - A criação ocorre em transação com bloqueio para o limite por pessoa, índice
   único para impedir empréstimo concorrente do mesmo equipamento e auditoria.
 - Meus empréstimos mostra somente os itens e o histórico do usuário atual.
@@ -98,8 +100,9 @@ esta spec substitui o comportamento fictício delas após a integração.
   convidado aceita, define senha e entra; erros não deixam acesso indevido.
 - **CA-03:** catálogo, detalhe, busca e filtros exibem registros reais do tenant
   e disponibilidade coerente com empréstimos abertos.
-- **CA-04:** solicitação respeita disponibilidade, limite de três, atraso e
-  prazo de 14 dias, inclusive sob concorrência, com auditoria.
+- **CA-04:** solicitação respeita disponibilidade, limite de cinco, atraso e
+  prazo de 14 dias úteis, inclusive sob concorrência, com auditoria, conforme
+  os critérios detalhados em `004-solicitar-emprestimo`.
 - **CA-05:** titular vê e devolve apenas os próprios itens; histórico permanece
   íntegro e registra quem fez a devolução.
 - **CA-06:** Operações vê os empréstimos abertos, atrasos e contagens reais e

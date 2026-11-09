@@ -122,8 +122,8 @@ identificado por texto.
 
 As regras de negócio decididas no PRD serão visíveis de forma consistente:
 
-- limite de três itens por pessoa;
-- prazo padrão de 14 dias;
+- limite de empréstimos em aberto vigente no PRD;
+- prazo padrão de devolução vigente no PRD;
 - bloqueio de novo empréstimo quando houver atraso;
 - indisponibilidade de equipamentos em manutenção.
 

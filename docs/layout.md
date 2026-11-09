@@ -1,5 +1,14 @@
 # EmpresTI â€” EspecificaÃ§Ã£o de Layout (para reproduÃ§Ã£o por agente de IA)
 
+> Atualização da entrega de solicitação (2026-11-09): o limite vigente é de
+> 5 empréstimos em aberto e o prazo é de 14 dias úteis, excluídos fins de
+> semana e feriados nacionais, contando a partir do próximo dia útil e com
+> vencimento no fim do minuto 23h59 em São Paulo. No catálogo funcional,
+> busca e filtros ficam fora dos cards; cada
+> card mostra somente foto e dados do equipamento, sem rodapé nem crédito
+> visível. Números e rodapés demonstrativos descritos abaixo são históricos
+> do protótipo e cedem ao PRD e à spec 004.
+
 Documento de referÃªncia do front-end do EmpresTI (emprÃ©stimo de equipamentos internos).
 Base visual: design system **Nocturne** adaptado Ã  primÃ¡ria `#001449`.
 **Somente modo escuro.** NÃ£o existe modo claro, nem alternador de tema.

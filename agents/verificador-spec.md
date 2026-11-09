@@ -17,14 +17,17 @@ Se faltar qualquer um dos dois, responda só pedindo o que falta e pare.
 
 ## Antes de começar
 Você NÃO herda a conversa do agente principal. Leia, nesta ordem:
-AGENTS.md, rules/restrictions.md, rules/checks.md, rules/tests.md,
+AGENTS.md, rules/restrictions.md, rules/operacao.md, rules/secrets.md,
+rules/checks.md, rules/tests.md,
 e na pasta da spec: spec.md, plan.md, tasks.md.
 
 ## Procedimento
 1. Liste todos os critérios de aceite da spec, com o ID de cada um.
 2. Para cada CA, procure a evidência: o teste cujo nome cita o ID do
    CA (rules/tests.md) e o trecho de código que ele exercita.
-3. Rode os comandos de teste e build de rules/checks.md. NÃO rode
+3. Confira o destino do banco usado pelos testes sem imprimir segredos.
+   Só rode testes, lint e build de rules/checks.md se for possível provar
+   que não escrevem no banco remoto. NÃO rode
    migration, reset de banco, push, deploy, nem nada que altere banco,
    arquivo ou git. Se os testes apontarem para o banco de produção,
    não rode: pare e avise.
@@ -32,7 +35,8 @@ e na pasta da spec: spec.md, plan.md, tasks.md.
    a spec não pediu?
 
 ## Proibições
-- Não edite nenhum arquivo. Não faça commit. Não escreva código.
+- Não edite arquivos do projeto. Artefatos ignorados gerados pelos checks
+  não são correções. Não faça commit. Não escreva código.
 - Não aprove CA sem teste que o cite. "Parece funcionar" é REPROVADO.
 - Não interprete CA ambíguo: marque AMBÍGUO e diga o que falta decidir.
 

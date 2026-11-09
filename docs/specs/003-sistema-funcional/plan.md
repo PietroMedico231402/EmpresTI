@@ -15,9 +15,9 @@
 4. Criar cliente Prisma singleton e endpoint tRPC. Resolver identidade,
    membership, tenant e papel uma vez por requisição. Validar configuração no
    boot e impedir que execução local alcance host remoto.
-5. Implementar Services e procedimentos tipados de catálogo, equipamentos,
-   empréstimos e operações. Fazer toda mutação com validação, autorização e
-   auditoria. Usar transação e bloqueio por membership para novos empréstimos.
+5. Implementar Services e procedimentos tipados de catálogo e equipamentos.
+   O fluxo de solicitação, a transação, o limite e o prazo seguem a spec 004.
+   Devolução e Operações serão implementadas depois dessa entrega.
 6. Conectar as telas ao tRPC/TanStack Query e seus formulários. Trocar números,
    filtros e mensagens fictícios por dados reais e estados vazios.
 7. Verificar o fluxo completo com o Supabase local: convite, aceite, login,
@@ -45,6 +45,8 @@
 
 - A spec 001 descreve mocks. Depois de aprovada esta spec, os comportamentos
   reais aqui definidos substituem os mocks, mantendo o layout.
+- `004-solicitar-emprestimo` detalha e entrega a solicitação antes das tarefas
+  de devolução e Operações desta spec.
 - O `.env` versionado contém URLs e valores de conexão preenchidos; o operador
   precisa removê-lo do histórico publicado e trocar credenciais potencialmente
   expostas. O agente não manipulará o arquivo por causa da regra operacional.

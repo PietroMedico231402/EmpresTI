@@ -1,6 +1,6 @@
 ---
 description: Procedimento para qualquer mudança de schema
-globs: ["prisma/migrations/**", "prisma/schema.prisma", "<CAMINHO-DO-ACESSO-A-DADOS>"]
+globs: ["prisma/migrations/**", "prisma/schema.prisma"]
 alwaysApply: false
 ---
 
@@ -28,7 +28,7 @@ parecer trivial.
    existentes. Coluna obrigatória nova precisa de default ou de um
    passo de preenchimento.
 6. Valide do zero com `npx prisma migrate reset --force`, usando somente
-   a conexão direta do Supabase local, e rode `<COMANDO-TESTES>`.
+   a conexão direta do Supabase local, e rode `npm test`.
 
 ## Verificação
 `npx prisma migrate reset --force` contra o Supabase local aplica todas as

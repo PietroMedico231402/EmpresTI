@@ -10,7 +10,7 @@ Ao iniciar qualquer funcionalidade nova do PRD.
 3. `plan.md` sai da spec e cita os ADRs que o restringem.
 4. `tasks.md` sai do plano. Cada tarefa cita um `CA-xx` e cabe
    num commit.
-5. Uma tarefa por vez. Ao terminar, siga `rules/check.md`.
+5. Uma tarefa por vez. Ao terminar, siga `rules/checks.md`.
 
 ## Não faça
 
