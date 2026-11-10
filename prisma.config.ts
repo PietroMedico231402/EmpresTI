@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -94,6 +94,8 @@ export default defineConfig({
   },
   datasource: {
     // Prisma Migrate must use the direct local PostgreSQL connection.
-    url: env("DIRECT_URL"),
+    // `prisma generate` roda no build sem precisar de conexão com o banco.
+    // Comandos de migration continuam exigindo DIRECT_URL válido.
+    url: process.env.DIRECT_URL ?? "",
   },
 });
