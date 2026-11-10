@@ -166,6 +166,40 @@ describe.skipIf(!prisma)("integridade e RLS no PostgreSQL local", () => {
     });
   });
 
+  it("test_ca_04_calcula_14_dias_uteis_no_fuso_de_sao_paulo", async () => {
+    await withRollback(async (tx) => {
+      const ids = await fixture(tx);
+      const cases = [
+        { borrowedAt: "2026-11-06T15:00:00Z", dueAt: "2026-11-28T02:59:59.999Z" },
+        { borrowedAt: "2026-11-07T02:30:00Z", dueAt: "2026-11-28T02:59:59.999Z" },
+        { borrowedAt: "2026-03-19T15:00:00Z", dueAt: "2026-04-10T02:59:59.999Z" },
+        { borrowedAt: "2026-12-18T15:00:00Z", dueAt: "2027-01-12T02:59:59.999Z" },
+      ];
+
+      for (const { borrowedAt, dueAt } of cases) {
+        const loan = await tx.loan.create({
+          data: {
+            tenantId: ids.tenantA,
+            equipmentId: ids.equipmentA,
+            borrowerMembershipId: ids.memberA,
+            borrowedAt: new Date(borrowedAt),
+            dueAt: new Date(borrowedAt),
+          },
+        });
+        expect(loan.dueAt.toISOString()).toBe(dueAt);
+        const [exact] = await tx.$queryRaw<Array<{ exact: boolean }>>`
+          SELECT due_at = (${dueAt.replace(".999Z", ".999999Z")}::timestamptz) AS exact
+          FROM public.loans WHERE id = ${loan.id}::uuid
+        `;
+        expect(exact.exact).toBe(true);
+        await tx.loan.update({
+          where: { id: loan.id },
+          data: { returnedAt: new Date("2027-02-01T00:00:00Z"), returnedByMembershipId: ids.memberA },
+        });
+      }
+    });
+  });
+
   it("test_ca_07_mantem_auditoria_append_only", async () => {
     await withRollback(async (tx) => {
       const ids = await fixture(tx);
