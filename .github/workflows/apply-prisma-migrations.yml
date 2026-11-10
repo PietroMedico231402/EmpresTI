@@ -1,0 +1,85 @@
+name: Apply Prisma migrations
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Digite MIGRAR_PRODUCAO para aplicar as migrations no Supabase de producao'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prisma-production-migrations
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Confirm operator and branch
+        env:
+          TARGET_REF: ${{ github.ref }}
+          ACTOR: ${{ github.actor }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          if [ "$TARGET_REF" != 'refs/heads/main' ] || [ "$ACTOR" != 'PietroMedico231402' ] || [ "$CONFIRMATION" != 'MIGRAR_PRODUCAO' ]; then
+            echo 'Execute na main, com o operador autorizado e a confirmacao exata.' >&2
+            exit 1
+          fi
+
+      - name: Check out main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22.17.1'
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Validate Supabase destination
+        env:
+          DIRECT_URL: ${{ secrets.SUPABASE_PROD_SESSION_URL }}
+          EXPECTED_REF: ${{ vars.SUPABASE_PROD_PROJECT_REF }}
+        run: |
+          node <<'NODE'
+          const ref = process.env.EXPECTED_REF;
+          const raw = process.env.DIRECT_URL;
+          if (!ref || !/^[a-z0-9]{20}$/.test(ref) || !raw) {
+            throw new Error('Configure o secret SUPABASE_PROD_SESSION_URL e a variable SUPABASE_PROD_PROJECT_REF.');
+          }
+          let url;
+          try {
+            url = new URL(raw);
+          } catch {
+            throw new Error('URL de conexao do Supabase invalida.');
+          }
+          const valid = ['postgres:', 'postgresql:'].includes(url.protocol)
+            && /^[a-z0-9-]+\.pooler\.supabase\.com$/.test(url.hostname)
+            && url.port === '5432'
+            && url.pathname === '/postgres'
+            && decodeURIComponent(url.username) === `postgres.${ref}`
+            && Boolean(url.password)
+            && !url.searchParams.has('pgbouncer');
+          if (!valid) {
+            throw new Error('Use o Session Pooler do projeto esperado, na porta 5432.');
+          }
+          console.log('Destino de migration validado.');
+          NODE
+
+      - name: Apply pending migrations
+        env:
+          DIRECT_URL: ${{ secrets.SUPABASE_PROD_SESSION_URL }}
+        run: ./node_modules/.bin/prisma migrate deploy
+
+      - name: Verify migration status
+        env:
+          DIRECT_URL: ${{ secrets.SUPABASE_PROD_SESSION_URL }}
+        run: ./node_modules/.bin/prisma migrate status
