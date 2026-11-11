@@ -1,6 +1,6 @@
 # Spec — Dados iniciais de equipamentos e conta de teste
 
-**Status:** aprovada pelo time em 09/11/2026; implementação pendente  
+**Status:** aprovada em 09/11/2026; revisão de ordem proposta em 11/11/2026
 **Vínculo:** prática SDD; `docs/prd.md`; `docs/adr/001-stack.md`;
 `docs/specs/002-modelo-dados/spec.md` e `docs/specs/003-sistema-funcional/spec.md`.
 
@@ -39,9 +39,11 @@ produção sem duplicação.
 - Equipamentos e categorias do tenant `suporte_ti`, Supabase Auth, membership
   do professor e bucket público `equipamentos`.
 - O vínculo foto–equipamento é pelo patrimônio único: objeto
-  `equipamentos/TI-0001.jpg` até `TI-0012.jpg`. O catálogo da spec 004 deriva
-  a URL pública do patrimônio e valida que o objeto existe. Isso evita
-  migration apenas para guardar uma URL calculável.
+  `equipamentos/TI-0001.jpg` até `TI-0012.jpg`. Quando a etapa de fotos for
+  retomada, o catálogo poderá derivar a URL pública do patrimônio após
+  validar que o objeto aprovado existe. Até lá, a spec 004 usa ícones
+  provisórios e não exige objeto no Storage. Isso evita migration apenas
+  para guardar uma URL calculável.
 - O manifesto de créditos guarda patrimônio, ID Pixabay, URL de origem,
   fotógrafo, licença, hash, revisão e caminho do objeto.
 
@@ -68,6 +70,8 @@ produção sem duplicação.
 
 - Tela de catálogo, solicitação e devolução, cadastro pela interface e
   importação da planilha.
-- O plano foi aprovado para executar apenas a T01. Nenhuma publicação é
-  autorizada por esta spec; a verificação de produção depende da execução do
-  operador.
+- O seed local de T03 pode preceder a revisão de fotos de T02, conforme a
+  prioridade definida pelo usuário em 11/11/2026. CA-02 e a parte de fotos
+  de CA-04 continuam pendentes e não bloqueiam o fluxo local da spec 004.
+- Nenhuma publicação é autorizada por esta spec; a verificação de produção
+  depende da execução do operador.
