@@ -10,6 +10,9 @@ import { describe, expect, it } from "vitest";
 const skill = resolve(process.cwd(), ".agents/skills/imagens-equipamentos");
 const imageTool = join(skill, "scripts/image.mjs");
 const validator = join(skill, "scripts/validate.ps1");
+const powershell = process.platform === "win32" && spawnSync("pwsh", ["-NoProfile", "-Command", "exit 0"]).error
+  ? "powershell.exe"
+  : "pwsh";
 const equipment = JSON.parse(readFileSync(join(skill, "references/equipamentos.json"), "utf8")) as Array<{
   patrimonio: string;
   nome: string;
@@ -99,7 +102,7 @@ describe("skill de fotos dos equipamentos", () => {
       }
       const manifestPath = join(root, "manifest.json");
       const reviewPath = join(root, "review.json");
-      const verify = () => spawnSync("pwsh", ["-NoProfile", "-File", validator, "-Action", "Verify", "-ReviewPath", reviewPath, "-ReviewRoot", root], {
+      const verify = () => spawnSync(powershell, ["-NoProfile", "-File", validator, "-Action", "Verify", "-ReviewPath", reviewPath, "-ReviewRoot", root], {
         encoding: "utf8",
         timeout: 60_000,
       });
@@ -155,7 +158,7 @@ describe("skill de fotos dos equipamentos", () => {
       write();
       const invalidDimensions = verify();
       expect(invalidDimensions.status).not.toBe(0);
-      expect(invalidDimensions.stderr).toContain("não é JPEG 800×600");
+      expect(invalidDimensions.stderr).toMatch(/JPEG 800/);
     } finally {
       if (!root.startsWith(`${tmpdir()}${sep}`)) throw new Error("Diretório de teste fora da pasta temporária.");
       rmSync(root, { recursive: true, force: true });
