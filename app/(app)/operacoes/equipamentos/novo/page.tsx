@@ -1,5 +1,5 @@
-import { RoutePlaceholder } from "@/components/route-placeholder";
+import { NewEquipmentPage } from "@/components/new-equipment-page";
 
 export default function NovoEquipamentoPage() {
-  return <RoutePlaceholder section="Operações" title="Cadastrar equipamento" description="Adicione uma unidade física ao catálogo." />;
+  return <NewEquipmentPage />;
 }

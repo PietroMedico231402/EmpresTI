@@ -1,5 +1,5 @@
-import { RoutePlaceholder } from "@/components/route-placeholder";
+import { EquipmentDetail } from "@/components/equipment-detail";
 
 export default function DetalhePage() {
-  return <RoutePlaceholder section="Catálogo · Notebooks" title="Detalhe do equipamento" description="Informações e solicitação do patrimônio PAT-1042." />;
+  return <EquipmentDetail />;
 }
