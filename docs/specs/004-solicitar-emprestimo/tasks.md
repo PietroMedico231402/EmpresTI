@@ -21,17 +21,18 @@ rodar os checks e parar antes da próxima.
 - Criar empréstimo e auditoria apenas quando todas as regras passarem.
 - Testar limite, atraso, disponibilidade, tenant e duas solicitações simultâneas.
 
-## T03 — Exibir catálogo funcional e foto revisada
+## T03 — Conectar a confirmação ao catálogo funcional
 
 **Critérios:** CA-01, CA-03, CA-08  
-**Dependência:** T02, catálogo real de `003` e fotos aprovadas em
-`005-dados-iniciais`.
+**Dependência:** T02, catálogo real de `003/T05` e seed local de
+`005-dados-iniciais/T03`.
 
-- Mostrar imagem, nome, categoria e situação; manter busca/filtros fora dos
-  cards e retirar rodapé/crédito visível.
-- Integrar somente as fotos 800×600 aprovadas, com créditos no manifesto
-  interno, ajustando o gate da skill para a nova decisão visual.
-- Testar estados e ausência de ação indevida.
+- Mostrar ícone provisório, nome, categoria e situação; manter busca/filtros
+  fora dos cards e retirar rodapé/crédito visível.
+- No detalhe, confirmar a solicitação via `loan.request` apenas para item
+  disponível; mostrar progresso, sucesso e erro sem envio duplo.
+- Testar que item sem foto continua visível e solicitável, e que nenhuma
+  imagem não revisada ou ação indevida aparece.
 
 ## T04 — Exibir os empréstimos próprios em aberto
 
@@ -48,7 +49,7 @@ rodar os checks e parar antes da próxima.
 **Dependência:** T01 a T04.
 
 - Exercitar catálogo → confirmação → empréstimo aberto → lista própria.
-- Conferir concorrência, calendário, fotos, ausência de crédito visível,
-  escopo, testes, lint, build e estado do Git.
+- Conferir concorrência, calendário, ícones provisórios, ausência de imagem
+  não revisada, escopo, testes, lint, build e estado do Git.
 - Passar a spec ao verificador-spec com caminho e intervalo de commits antes
   de declará-la pronta.
