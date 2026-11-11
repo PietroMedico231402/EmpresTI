@@ -4,9 +4,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AppHeader } from "@/components/app-header";
 import { AppSidebar } from "@/components/app-sidebar";
 
-const { mockPathname } = vi.hoisted(() => ({ mockPathname: vi.fn() }));
+const { mockPathname, replace, refresh } = vi.hoisted(() => ({ mockPathname: vi.fn(), replace: vi.fn(), refresh: vi.fn() }));
 
-vi.mock("next/navigation", () => ({ usePathname: mockPathname }));
+vi.mock("next/navigation", () => ({ usePathname: mockPathname, useRouter: () => ({ replace, refresh }) }));
 
 describe("shell autenticado", () => {
   beforeEach(() => {

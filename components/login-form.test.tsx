@@ -4,14 +4,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import LoginPage from "@/app/login/page";
 
-const { push } = vi.hoisted(() => ({ push: vi.fn() }));
+const { push, refresh } = vi.hoisted(() => ({ push: vi.fn(), refresh: vi.fn() }));
 const { signInWithPassword } = vi.hoisted(() => ({ signInWithPassword: vi.fn().mockResolvedValue({ error: null }) }));
 
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push, refresh }) }));
 vi.mock("@/lib/supabase/client", () => ({ createClient: () => ({ auth: { signInWithPassword } }) }));
 
 describe("login demonstrativo", () => {
-  beforeEach(() => { push.mockClear(); signInWithPassword.mockResolvedValue({ error: null }); });
+  beforeEach(() => { push.mockClear(); refresh.mockClear(); signInWithPassword.mockResolvedValue({ error: null }); });
 
   it("test_ca_02_exibe_hero_limites_e_campos_rotulados", () => {
     render(<LoginPage />);
