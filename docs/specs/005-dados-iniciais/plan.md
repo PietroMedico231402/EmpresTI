@@ -1,6 +1,6 @@
 # Plano — Dados iniciais
 
-**Status:** aprovado pelo time em 09/11/2026 para executar a T01  
+**Status:** aprovado para T01 em 09/11/2026; revisão de ordem aguardando aprovação
 **Spec:** `docs/specs/005-dados-iniciais/spec.md`
 
 ## Restrições
@@ -13,6 +13,10 @@
 - Não criar empréstimos. Executar uma tarefa por vez, com os checks da rule.
 
 ## Sequência
+
+O seed de equipamentos da etapa 3 pode ser executado antes da seleção de
+fotos da etapa 2 para liberar o fluxo local. A numeração das tarefas foi
+preservada; a etapa 2 fica pendente e não bloqueia a spec 004.
 
 1. Corrigir a skill para usar `sharp` após o download, preservar os gates de
    dimensão, origem, unicidade, crédito e revisão, e testar o processamento
@@ -40,5 +44,6 @@ operador mantém o agente sem credenciais de escrita em produção.
 
 ## Condição para executar
 
-A spec, o plano, `sharp` e a execução apenas da T01 foram aprovados pelo time.
-Uma tarefa subsequente exige nova autorização após os checks da T01.
+A spec, o plano, `sharp` e a execução da T01 foram aprovados pelo time. O seed
+local da T03 foi autorizado e executado depois, sem fotos. Cada nova tarefa
+continua exigindo autorização própria após os checks da anterior.

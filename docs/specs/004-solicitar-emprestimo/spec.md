@@ -1,6 +1,6 @@
 # Spec — Solicitar empréstimo
 
-**Status:** proposta para aprovação  
+**Status:** revisão aprovada em 11/11/2026 para priorizar o fluxo local
 **Origem:** briefing da turma de 9 de novembro de 2026 e `docs/prd.md`  
 **Base:** `docs/adr/001-stack.md`, `002-modelo-dados`,
 `003-sistema-funcional` e `005-dados-iniciais`
@@ -25,34 +25,31 @@ aprovação de Operações ou fila de espera.
 - O vencimento é no fim do minuto 23h59 do 14º dia útil em
   `America/Sao_Paulo`. A interface mostra a data e `23h59`; o instante salvo
   em `due_at` é 23:59:59.999999 no fuso local, convertido para `timestamptz`.
-- O catálogo conserva busca e filtros fora dos cards. Cada card contém apenas
-  a foto e os dados do equipamento, sem rodapé ou texto de crédito.
-- As fotos são as preparadas pela skill `imagens-equipamentos`; a origem,
-  autoria e licença continuam registradas no manifesto interno, sem crédito
-  visível na tela. A licença de conteúdo do Pixabay dispensa atribuição pelo
-  uso da foto; a API pede indicação da origem quando resultados de busca da
-  própria API são exibidos. O catálogo usa arquivos já selecionados e
-  armazenados no Supabase Storage, não resultados de busca da API.
+- O catálogo conserva busca e filtros fora dos cards. Cada card contém os
+  dados do equipamento e um ícone provisório no lugar da foto, sem rodapé ou
+  texto de crédito. A falta de foto não oculta nem bloqueia o equipamento.
+- A seleção e publicação de fotos da spec `005-dados-iniciais` ficam adiadas.
+  Nenhuma foto não revisada, imagem de outra origem ou resultado direto da API
+  Pixabay entra no catálogo. Quando a etapa de fotos for retomada, somente
+  JPEGs 800×600 aprovados pela skill `imagens-equipamentos` poderão substituir
+  os ícones, com origem, autoria e licença no manifesto interno.
 
 ## Pré-requisitos
 
 - Sessão e membership `COLLABORATOR` válidas, conforme `003`.
-- Tenant `suporte_ti` e categorias preparados conforme `002`; equipamentos
-  e fotos preparados conforme `005-dados-iniciais`. A 005 é executada antes
-  desta spec, apesar de seu número refletir a ordem de criação dos documentos.
-  Nenhum empréstimo prévio é necessário.
-- Fotos aprovadas pela skill `imagens-equipamentos`, uma por equipamento,
-  800×600, com URLs estáveis no bucket público. O catálogo não usa imagens de
-  outra origem.
+- Tenant `suporte_ti` e categorias preparados conforme `002`, e equipamentos
+  cadastrados pelo seed local de `005-dados-iniciais/T03`. A revisão de fotos
+  de `005/T02` não é pré-requisito deste fluxo. Nenhum empréstimo prévio é
+  necessário.
 - Nova migration Prisma aprovada e aplicada no Supabase **local** para
   substituir o gatilho atual que soma 14 dias corridos. Empréstimos existentes
   preservam o `due_at` gravado; a regra nova vale apenas para novas inserções.
 
 ## Fluxo e regras
 
-1. O catálogo lista equipamentos do tenant com foto, nome, categoria e
-   situação derivada do estado operacional e da existência de empréstimo
-   aberto. Busca e filtros não alteram a autorização do servidor.
+1. O catálogo lista equipamentos do tenant com ícone provisório, nome,
+   categoria e situação derivada do estado operacional e da existência de
+   empréstimo aberto. Busca e filtros não alteram a autorização do servidor.
 2. Equipamento `AVAILABLE` sem empréstimo aberto pode abrir a confirmação.
    Equipamento `MAINTENANCE`, `RETIRED` ou com empréstimo aberto não oferece
    ação de solicitação. O servidor rejeita pedidos forjados para esses casos.
@@ -82,8 +79,8 @@ aprovação de Operações ou fila de espera.
 ## Critérios de aceitação
 
 - **CA-01:** colaborador autenticado vê somente equipamentos do tenant, com
-  foto, nome, categoria e situação correta; busca e filtros funcionam fora
-  dos cards, que não têm rodapé ou crédito visível.
+  ícone provisório, nome, categoria e situação correta; busca e filtros
+  funcionam fora dos cards, que não têm rodapé ou crédito visível.
 - **CA-02:** somente equipamento operacionalmente disponível e sem empréstimo
   aberto pode ser solicitado; chamadas diretas para itens emprestados, em
   manutenção, fora de uso ou de outro tenant são recusadas.
@@ -99,9 +96,10 @@ aprovação de Operações ou fila de espera.
   um empréstimo; o perdedor recebe erro de indisponibilidade.
 - **CA-07:** Meus empréstimos mostra apenas os empréstimos abertos do usuário
   atual e a data/hora de devolução prevista, com estado vazio quando cabível.
-- **CA-08:** fotos vêm somente da skill `imagens-equipamentos`, com manifesto
-  interno de origem, fotógrafo e licença; nenhuma foto repetida ou fora de
-  800×600 chega ao catálogo.
+- **CA-08:** equipamentos sem foto aprovada aparecem com ícone provisório,
+  sem bloquear a solicitação; nenhuma imagem não revisada ou de outra origem
+  chega ao catálogo. A futura substituição por fotos exige o fluxo completo
+  de revisão, unicidade, 800×600 e créditos da spec `005-dados-iniciais`.
 - **CA-09:** testes nomeados por CA exercitam os fluxos com banco local,
   autorização, concorrência e cálculo de prazo; lint e build passam, sem
   alteração de banco ou serviço remoto.

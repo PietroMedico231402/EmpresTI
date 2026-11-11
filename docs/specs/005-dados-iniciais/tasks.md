@@ -16,6 +16,9 @@ autorização e parar após os checks.
 
 **Critérios:** CA-02, CA-04
 
+**Situação:** adiada a pedido do usuário; não bloqueia T03 nem o fluxo local
+da spec 004 com ícones provisórios.
+
 - Consultar a API Pixabay com a chave fornecida ao operador por prompt oculto.
 - Revisar cada JPEG final e registrar candidatos recusados com motivo.
 - Verificar 12 URLs e hashes distintos no bucket público local.

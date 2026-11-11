@@ -3,8 +3,15 @@ import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 import { PrismaClient } from "../src/generated/prisma/client";
+import equipment from "../.agents/skills/imagens-equipamentos/references/equipamentos.json";
 
 const categoryNames = ["Notebook", "Monitor", "Cabo", "Câmera", "Projetor"];
+const categoryByType: Record<string, string> = {
+  notebook: "Notebook",
+  monitor: "Monitor",
+  cabo: "Cabo",
+  camera: "Câmera",
+};
 
 function localDirectUrl(): string {
   const value = process.env.DIRECT_URL;
@@ -44,9 +51,37 @@ async function main() {
         data: categoryNames.map((name) => ({ tenantId: tenant.id, name })),
         skipDuplicates: true,
       });
+
+      const categories = await tx.equipmentCategory.findMany({
+        where: { tenantId: tenant.id, name: { in: categoryNames } },
+        select: { id: true, name: true },
+      });
+      const categoryIds = new Map(categories.map(({ name, id }) => [name, id]));
+
+      if (equipment.length !== 12 || new Set(equipment.map((item) => item.patrimonio)).size !== 12) {
+        throw new Error("A referência deve conter 12 patrimônios distintos.");
+      }
+
+      for (const item of equipment) {
+        const categoryName = categoryByType[item.categoria];
+        const categoryId = categoryIds.get(categoryName);
+        if (!categoryId) throw new Error(`Categoria ausente para ${item.patrimonio}.`);
+
+        const data = {
+          categoryId,
+          name: item.nome,
+          pickupLocation: "Help Desk",
+          status: item.situacao === "manutencao" ? "MAINTENANCE" as const : "AVAILABLE" as const,
+        };
+        await tx.equipment.upsert({
+          where: { tenantId_assetTag: { tenantId: tenant.id, assetTag: item.patrimonio } },
+          create: { tenantId: tenant.id, assetTag: item.patrimonio, ...data },
+          update: data,
+        });
+      }
     });
 
-    console.info("Seed local concluído: tenant suporte_ti e categorias iniciais conferidos.");
+    console.info("Seed local concluído: tenant suporte_ti, categorias e 12 equipamentos conferidos.");
   } finally {
     await prisma.$disconnect();
   }

@@ -1,6 +1,6 @@
 # Plano — Solicitar empréstimo
 
-**Status:** aguardando aprovação  
+**Status:** revisão aprovada em 11/11/2026
 **Spec:** `docs/specs/004-solicitar-emprestimo/spec.md`  
 **ADR:** `docs/adr/001-stack.md`
 
@@ -11,7 +11,8 @@
   adicional de calendário sem decisão do time.
 - Depender da sessão e do contexto tenant/membership de `003/T02` e `003/T04`,
   do catálogo real de `003/T05`, do seed de `002/T03` e da conclusão de
-  `005-dados-iniciais` para equipamentos, conta e fotos revisadas.
+  `005-dados-iniciais/T03` para os equipamentos locais. A revisão de fotos de
+  `005/T02` fica adiada e não impede o empréstimo.
 - O schema já possui `due_at` e índice único parcial por equipamento aberto.
   Uma nova migration Prisma deve substituir a função de prazo atual; a
   migration inicial publicada não será editada.
@@ -35,19 +36,21 @@
    transação; conferir estado, empréstimo aberto, limite e atraso; inserir
    empréstimo e auditoria. Converter violação do índice único em erro de
    indisponibilidade, sem vazar detalhes de outro tenant.
-3. **Catálogo:** consumir consulta real do tenant e combinar status operacional
-   com empréstimo aberto. Exibir imagem 800×600 preparada pela skill, nome,
-   categoria e situação. Manter busca e filtros fora dos cards. Tirar rodapé
-   e texto de crédito do catálogo funcional. Preservar manifesto interno de
-   autoria/licença; revisar a skill e seu validador para refletir a decisão
-   atual sobre crédito visível antes de publicar imagens.
+3. **Catálogo e confirmação:** usar a consulta real do tenant e combinar status
+   operacional com empréstimo aberto. Exibir ícone provisório, nome, categoria
+   e situação, com busca e filtros fora dos cards. Na página de detalhe,
+   permitir confirmação apenas para item disponível; chamar `loan.request`,
+   mostrar progresso, sucesso e erro, e impedir envio duplo. Não carregar
+   foto não revisada nem exigir objeto no Storage. A integração futura das
+   fotos segue `005-dados-iniciais` e não faz parte desta tarefa.
 4. **Meus empréstimos:** apresentar lista aberta filtrada pela membership,
    com vencimento em São Paulo e estado vazio. Atualizar cache do catálogo e
    da lista após confirmação, sem simular sucesso antes da resposta da API.
 5. **Verificação:** testar recusa de disponibilidade, limite e atraso, dois
    pedidos simultâneos ao mesmo item e à mesma pessoa, isolamento entre
-   tenants e datas de borda. Rodar testes, lint e build com Supabase local;
-   conferir o diff e os arquivos de escopo.
+   tenants e datas de borda. Confirmar que itens sem foto continuam visíveis
+   e solicitáveis e que nenhuma imagem não revisada é carregada. Rodar
+   testes, lint e build com Supabase local; conferir o diff e o escopo.
 
 ## DDL a apresentar antes da primeira tarefa
 
@@ -60,6 +63,7 @@ Nenhuma coluna, índice, policy ou empréstimo existente será alterado.
 
 ## Condição para começar o código
 
-1. Aprovação desta spec e deste plano.
-2. Aprovação explícita do DDL da nova migration.
+1. Aprovação da revisão desta spec e deste plano para a próxima tarefa T03.
+2. T01 (migration) e T02 (service/procedimento) já foram implementadas; o DDL
+   da migration existente não será alterado nesta revisão.
 3. Execução de uma tarefa por autorização, com checks e handoff após cada uma.
