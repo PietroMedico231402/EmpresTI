@@ -112,6 +112,11 @@ describe("skill de fotos dos equipamentos", () => {
       const approved = verify();
       expect(approved.status, approved.stderr).toBe(0);
 
+      review[0].reviewer = "";
+      write();
+      expect(verify().status).not.toBe(0);
+      review[0].reviewer = "Revisora de teste";
+
       review[0].semPessoa = false;
       write();
       expect(verify().status).not.toBe(0);
@@ -156,4 +161,12 @@ describe("skill de fotos dos equipamentos", () => {
       rmSync(root, { recursive: true, force: true });
     }
   }, 120_000);
+
+  it("test_ca_02_e_ca_05_mantem_creditos_apenas_no_manifesto_interno", () => {
+    const catalog = readFileSync(resolve(process.cwd(), "app/(app)/catalogo/catalog-view.tsx"), "utf8");
+    expect(catalog).not.toMatch(/pixabay|photographer|fotógrafo|cr[eé]dito/i);
+
+    const validation = readFileSync(validator, "utf8");
+    expect(validation).toContain("docs/equipment-image-credits.json");
+  });
 });
