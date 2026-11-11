@@ -67,4 +67,9 @@ describe("shell autenticado", () => {
     expect(within(breadcrumb).getByText("PAT-1042")).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("button", { name: "Notificações" })).toBeInTheDocument();
   });
+
+  it("test_ca_02_oferece_convite_a_qualquer_membro_no_cabecalho", () => {
+    render(<AppHeader />);
+    expect(screen.getByRole("link", { name: "Convidar colaborador" })).toHaveAttribute("href", "/convidar");
+  });
 });

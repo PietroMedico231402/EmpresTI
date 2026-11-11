@@ -42,6 +42,7 @@ export function AppHeader() {
       )}
 
       <div className="flex shrink-0 items-center gap-4">
+        <Link href="/convidar" className="text-xs font-semibold text-[#b4c6f6] hover:text-foreground">Convidar colaborador</Link>
         {showCount && <span className="text-xs text-[#9aa3bc]">2 de 5 itens com você</span>}
         {isOperationsList && (
           <Link href="/operacoes/equipamentos/novo" className="flex h-[34px] items-center gap-2 rounded-lg border border-[#5b7fe0] px-[14px] text-xs font-semibold text-[#b4c6f6] hover:border-[#8aa6ee]">
