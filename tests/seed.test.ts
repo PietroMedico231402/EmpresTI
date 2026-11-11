@@ -1,13 +1,14 @@
 import "dotenv/config";
 
 import { execFileSync } from "node:child_process";
-import { resolve } from "node:path";
+import { createRequire } from "node:module";
 
 import { Client } from "pg";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 const connectionString = process.env.DIRECT_URL;
 const client = new Client({ connectionString });
+const require = createRequire(import.meta.url);
 
 describe("seed local", () => {
   beforeAll(async () => {
@@ -20,7 +21,7 @@ describe("seed local", () => {
   });
 
   it("test_ca_08_reexecuta_sem_duplicar_tenant_ou_categorias", () => {
-    const tsx = resolve(process.cwd(), "node_modules", "tsx", "dist", "cli.mjs");
+    const tsx = require.resolve("tsx/cli");
     execFileSync(process.execPath, [tsx, "prisma/seed.ts"], { stdio: "pipe" });
     execFileSync(process.execPath, [tsx, "prisma/seed.ts"], { stdio: "pipe" });
 
