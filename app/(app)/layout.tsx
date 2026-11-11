@@ -5,6 +5,7 @@ import { AppHeader } from "@/components/app-header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { createClient } from "@/lib/supabase/server";
 import { hasInitialMembership } from "@/lib/supabase/membership";
+import { TRPCProvider } from "@/src/trpc/provider";
 
 export default async function AuthenticatedLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const supabase = await createClient();
@@ -16,7 +17,9 @@ export default async function AuthenticatedLayout({ children }: Readonly<{ child
       <AppSidebar />
       <div className="flex min-w-0 flex-col">
         <AppHeader />
-        <main id="conteudo" className="flex-1 px-7 py-8">{children}</main>
+        <TRPCProvider>
+          <main id="conteudo" className="flex-1 px-7 py-8">{children}</main>
+        </TRPCProvider>
         <form action={signOut} className="px-7 pb-6">
           <button type="submit" className="text-xs text-[#9aa3bc] hover:text-foreground">Sair</button>
         </form>
