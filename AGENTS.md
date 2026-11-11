@@ -46,3 +46,24 @@ Só registre nesta seção comandos que já tenham sido executados com sucesso n
 - Este checkout ainda não possui remoto Git configurado nem vínculo local em `.vercel/project.json`.
 
 ## Procedimentos
+
+- Leia `rules/restrictions.md` e a regra acionada pela tarefa.
+- Antes de dizer que uma tarefa ou spec está pronta, siga `rules/checks.md`
+  e `rules/spec-flow.md`.
+## Subagentes
+- Ficam em agents/<nome>.md. O frontmatter diz quando delegar; o
+  corpo é a instrução completa do subagente.
+- Subagente não herda esta conversa: ao delegar, passe tudo que o
+  arquivo dele pede como entrada.
+- Se o harness não tiver subagentes, abra uma sessão nova e comece
+  com: "Aja conforme agents/<nome>.md." e as entradas pedidas.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

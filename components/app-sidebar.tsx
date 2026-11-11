@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { LogoutButton } from "@/components/logout-button";
 
 const groups = [
   {
@@ -70,6 +71,7 @@ export function AppSidebar() {
         <div className="min-w-0">
           <p className="truncate text-xs font-semibold text-foreground">{isOperations ? "Operações" : "Colaborador"}</p>
           <p className="truncate text-[11px] text-[#7c86a2]">{isOperations ? "Balcão · 2º andar" : "Conta demonstrativa"}</p>
+          <LogoutButton />
         </div>
       </div>
     </aside>
