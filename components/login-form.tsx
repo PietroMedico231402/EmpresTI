@@ -1,18 +1,27 @@
 "use client";
 
-import type { FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { createClient } from "@/lib/supabase/client";
 
 export function LoginForm() {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const { error } = await createClient().auth.signInWithPassword({
+      email: String(form.get("email")),
+      password: String(form.get("password")),
+    });
+    if (error) { setError("E-mail ou senha inválidos."); return; }
     router.push("/catalogo");
+    router.refresh();
   }
 
   return (
@@ -48,6 +57,7 @@ export function LoginForm() {
       >
         Entrar <i className="ph ph-arrow-right text-base" aria-hidden="true" />
       </Button>
+      {error && <p role="alert" className="text-xs text-[#f0a0a5]">{error}</p>}
     </form>
   );
 }
