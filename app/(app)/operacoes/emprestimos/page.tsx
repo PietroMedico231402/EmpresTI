@@ -1,5 +1,5 @@
-import { RoutePlaceholder } from "@/components/route-placeholder";
+import { OperationsLoansView } from "@/components/operations-loans-view";
 
 export default function EmprestimosAbertosPage() {
-  return <RoutePlaceholder section="Operações" title="Empréstimos em aberto" description="Acompanhe os empréstimos e registre devoluções no balcão." />;
+  return <OperationsLoansView />;
 }
