@@ -1,5 +1,25 @@
 # Entrega da prática — EmpresTI
 
+## Situação conferida em 11/11/2026
+
+O commit `f733b55` incorporou a skill de imagens, a conversão com `sharp`,
+as specs 004 e 005, o relatório e as alterações de interface descritas abaixo.
+As menções a “sem commit” nas seções históricas registram o estado da revisão
+de 09/11/2026 e não descrevem o checkout atual.
+
+No checkout atual, `npm test` passou (4 arquivos, 12 testes) e `npm run lint`
+terminou sem erros. `npm run build` falhou antes da compilação ao tentar remover
+`.next/diagnostics` com `EPERM` na pasta sincronizada pelo OneDrive. O build
+isolado mencionado abaixo é uma evidência anterior, não substitui uma nova
+verificação do checkout atual.
+
+O sistema ainda não atende à primeira versão do PRD: login é demonstrativo;
+catálogo, detalhe, meus empréstimos e Operações exibem placeholders; não há
+integração com Auth ou banco. Faltam o seed, as 12 fotos revisadas, o cálculo
+de 14 dias úteis, solicitação e devolução reais e a verificação das specs.
+O único arquivo modificado antes desta conferência era `debug.log`, que não
+foi alterado nesta revisão.
+
 **Estado em 09/11/2026:** relatório factual em preparação. As specs da prática
 (`005-dados-iniciais` e `004-solicitar-emprestimo`) ainda não estão concluídas,
 e as provas de verificação pedidas na seção 6 ainda não existem.

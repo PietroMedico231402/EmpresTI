@@ -1,5 +1,5 @@
-import { RoutePlaceholder } from "@/components/route-placeholder";
+import { MyLoansPage } from "@/components/my-loans-page";
 
 export default function MeusEmprestimosPage() {
-  return <RoutePlaceholder section="Colaborador" title="Meus empréstimos" description="Acompanhe seus itens e prazos de devolução." />;
+  return <MyLoansPage />;
 }

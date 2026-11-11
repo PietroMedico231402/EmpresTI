@@ -21,10 +21,10 @@ export default function LoginPage() {
           <dl className="flex gap-10">
             <div className="flex flex-col gap-1">
               <dt className="order-2 text-xs text-[#93a0c6]">itens por pessoa</dt>
-              <dd className="text-2xl font-semibold text-foreground">3</dd>
+              <dd className="text-2xl font-semibold text-foreground">5</dd>
             </div>
             <div className="flex flex-col gap-1">
-              <dt className="order-2 text-xs text-[#93a0c6]">dias de prazo</dt>
+              <dt className="order-2 text-xs text-[#93a0c6]">dias úteis de prazo</dt>
               <dd className="text-2xl font-semibold text-foreground">14</dd>
             </div>
           </dl>
