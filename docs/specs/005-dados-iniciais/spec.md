@@ -27,6 +27,9 @@ produção sem duplicação.
   time que substituiu a origem Pexels do enunciado. Cada foto requer revisão
   visual, registro de origem, fotógrafo e licença, e JPEG final de 800×600.
   `sharp` foi aprovado pelo time para o redimensionamento após o download.
+- Por decisão do time em 11/11/2026, marcas, logos e textos incidentais do
+  próprio equipamento são permitidos nas fotos. A revisão continua recusando
+  pessoa, tela com conteúdo e foto repetida.
 - O agente prepara e verifica no Supabase **local**. Apenas o operador executa
   as etapas de escrita no banco e no Storage de produção. O pacote de operação
   deve usar os mesmos IDs, caminhos de objeto e critérios de revisão.

@@ -36,8 +36,6 @@ type ReviewRow = {
   license: string;
   licenseUrl: string;
   semPessoa: boolean;
-  semMarcaOuLogo: boolean;
-  semTexto: boolean;
   semTelaComConteudo: boolean;
   fotoDistinta: boolean;
 };
@@ -94,8 +92,6 @@ describe("skill de fotos dos equipamentos", () => {
           license: "Pixabay Content License",
           licenseUrl: "https://pixabay.com/service/terms/",
           semPessoa: true,
-          semMarcaOuLogo: true,
-          semTexto: true,
           semTelaComConteudo: true,
           fotoDistinta: true,
         });

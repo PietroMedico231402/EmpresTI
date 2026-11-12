@@ -4,7 +4,9 @@ param(
     [ValidateSet('Search', 'Prepare')]
     [string]$Action,
     [string]$Patrimonio,
-    [string]$SelectionsPath
+    [string]$SelectionsPath,
+    [ValidateRange(1, 50)]
+    [int]$Page = 1
 )
 
 $ErrorActionPreference = 'Stop'
@@ -104,7 +106,7 @@ try {
     if ($Action -eq 'Search') {
         $item = $equipment | Where-Object patrimonio -EQ $Patrimonio | Select-Object -First 1
         if (-not $item) { throw 'Informe um patrimônio da lista fixa TI-0001…TI-0012.' }
-        $query = "q=$([uri]::EscapeDataString($item.busca))&image_type=photo&orientation=horizontal&min_width=800&min_height=600&safesearch=true&per_page=10"
+        $query = "q=$([uri]::EscapeDataString($item.busca))&image_type=photo&orientation=horizontal&min_width=800&min_height=600&safesearch=true&per_page=10&page=$Page"
         $result = Get-PixabayResponse $query
         @($result.hits | ForEach-Object {
             [pscustomobject]@{
@@ -135,7 +137,11 @@ try {
     $hashes = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
     foreach ($item in $equipment) {
         $id = [int](@($selected | Where-Object patrimonio -EQ $item.patrimonio)[0].pixabayId)
-        $result = Get-PixabayResponse "id=$id&image_type=photo"
+        try {
+            $result = Get-PixabayResponse "id=$id&image_type=photo"
+        } catch {
+            throw "Falha ao consultar a foto de $($item.patrimonio) (Pixabay ID $id). $($_.Exception.Message)"
+        }
         $hit = @($result.hits | Where-Object id -EQ $id | Select-Object -First 1)[0]
         if (-not $hit -or $hit.type -ne 'photo' -or -not $hit.user -or -not $hit.user_id) { throw "Metadados incompletos para $($item.patrimonio)." }
         Assert-PixabayUrl $hit.pageURL $false
@@ -189,8 +195,6 @@ try {
                 license = ''
                 licenseUrl = ''
                 semPessoa = $false
-                semMarcaOuLogo = $false
-                semTexto = $false
                 semTelaComConteudo = $false
                 fotoDistinta = $false
             }

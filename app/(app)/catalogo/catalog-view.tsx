@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { equipmentImageUrl } from "@/src/lib/equipment-image";
 import { trpc } from "@/src/trpc/client";
 
 const statusLabel = { AVAILABLE: "Disponível", LOANED: "Emprestado", MAINTENANCE: "Em manutenção", RETIRED: "Inativo" } as const;
@@ -41,7 +42,8 @@ export function CatalogView() {
     {query.data && query.data.items.length === 0 && <p className="rounded-xl border border-dashed border-[#222c4a] p-10 text-center text-[#8a93b2]">Nenhum equipamento encontrado com estes filtros.</p>}
     {query.data && query.data.items.length > 0 && <ul className="grid grid-cols-3 gap-4" aria-label="Equipamentos">{query.data.items.map((item) => {
       const available = item.availability === "AVAILABLE";
-      const content = <article className="flex min-h-[178px] flex-col gap-3 rounded-xl border border-[#1f2949] bg-[#0e1530] p-4 transition-colors duration-[160ms] hover:border-[#3c5dbe]"><div className="flex items-start justify-between gap-3"><span className="flex size-10 items-center justify-center rounded-[9px] bg-[#0b1128] text-xl text-[#8aa6ee]"><i className={`ph ph-${iconFor(item.category)}`} aria-hidden="true" /></span><span className={`rounded-full border px-[9px] py-[3px] text-[11px] font-semibold ${statusStyle[item.availability]}`}>{statusLabel[item.availability]}</span></div><div><h2 className="text-[15px] font-semibold text-foreground">{item.name}</h2><p className="mt-1 text-xs text-[#7c86a2]">{item.category} · {item.assetTag}</p></div><p className="mt-auto text-xs text-[#5e6884]">{available ? "Solicitar empréstimo →" : <><i className="ph ph-map-pin" aria-hidden="true" /> {item.pickupLocation}</>}</p></article>;
+      const imageUrl = equipmentImageUrl(item.assetTag);
+      const content = <article className="flex min-h-[230px] flex-col gap-3 overflow-hidden rounded-xl border border-[#1f2949] bg-[#0e1530] transition-colors duration-[160ms] hover:border-[#3c5dbe]"><div className="relative flex h-28 items-center justify-center overflow-hidden bg-[#0b1128] text-[#8aa6ee]"><i className={`ph ph-${iconFor(item.category)} text-4xl`} aria-hidden="true" />{imageUrl && <img src={imageUrl} alt={`Foto de ${item.name}`} className="absolute inset-0 size-full object-cover" onError={(event) => { event.currentTarget.style.display = "none"; }} />}</div><div className="flex flex-1 flex-col gap-3 px-4 pb-4"><div className="flex items-start justify-between gap-3"><div><h2 className="text-[15px] font-semibold text-foreground">{item.name}</h2><p className="mt-1 text-xs text-[#7c86a2]">{item.category} · {item.assetTag}</p></div><span className={`shrink-0 rounded-full border px-[9px] py-[3px] text-[11px] font-semibold ${statusStyle[item.availability]}`}>{statusLabel[item.availability]}</span></div><p className="mt-auto text-xs text-[#5e6884]">{available ? "Solicitar empréstimo →" : <><i className="ph ph-map-pin" aria-hidden="true" /> {item.pickupLocation}</>}</p></div></article>;
       return <li key={item.id}>{available ? <Link href={`/catalogo/${encodeURIComponent(item.assetTag)}`} aria-label={`Ver ${item.name}, ${item.assetTag}`}>{content}</Link> : content}</li>;
     })}</ul>}
   </section>;
