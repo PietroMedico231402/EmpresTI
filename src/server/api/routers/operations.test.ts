@@ -36,4 +36,14 @@ describe("operações de empréstimos", () => {
     expect(updateMany).toHaveBeenCalledWith(expect.objectContaining({ where: expect.objectContaining({ tenantId: "tenant-1", returnedAt: null }) }));
     expect(create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ actorMembershipId: "membership-1", action: "LOAN_RETURNED" }) }));
   });
+
+  it("test_ca_01_cadastra_equipamento_no_tenant_da_operacao", async () => {
+    const findFirst = vi.fn().mockResolvedValue({ id: "4f64057a-b63c-4c57-a2bb-5d3b8cd8046b" });
+    const create = vi.fn().mockResolvedValue({ id: "equipment-1", assetTag: "TI-0099" });
+    const auditCreate = vi.fn().mockResolvedValue({});
+    const caller = appRouter.createCaller(context("OPERATIONS", { equipmentCategory: { findFirst }, equipment: { create }, auditLog: { create: auditCreate } } as unknown as TRPCContext["prisma"]));
+    await caller.operations.createEquipment({ name: "Notebook", assetTag: "TI-0099", categoryId: "4f64057a-b63c-4c57-a2bb-5d3b8cd8046b", pickupLocation: "Help Desk", status: "AVAILABLE" });
+    expect(create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ tenantId: "tenant-1", assetTag: "TI-0099" }) }));
+    expect(auditCreate).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ action: "EQUIPMENT_CREATED" }) }));
+  });
 });
