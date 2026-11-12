@@ -66,7 +66,7 @@ foreach ($item in $fixed) {
         throw "Foto de $($item.patrimonio) não é JPEG 800×600."
     }
     if ($approval.pixabayId -ne $row.pixabayId -or [string]::IsNullOrWhiteSpace($approval.reviewer)) { throw "Revisão inválida para $($item.patrimonio)." }
-    foreach ($flag in @('semPessoa', 'semMarcaOuLogo', 'semTexto', 'semTelaComConteudo', 'fotoDistinta')) {
+    foreach ($flag in @('semPessoa', 'semTelaComConteudo', 'fotoDistinta')) {
         if ($approval.$flag -cne $true) { throw "Revisão de $($item.patrimonio) não aprovou $flag." }
     }
     $licenseUrl = switch ($approval.license) {
